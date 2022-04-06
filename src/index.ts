@@ -7,7 +7,7 @@ const main = async () => {
   server = await registerServer();
   console.log(process.env.PORT);
   try {
-    let PORT;
+    let PORT: string;
     if (process.env.PORT) {
       PORT = process.env.PORT;
     } else {
@@ -17,6 +17,7 @@ const main = async () => {
     server.log.info(`Server has started on Port: ${PORT}`);
   } catch (error) {
     server.log.error('There was an error starting the server', error);
+    process.exit(1);
   }
 };
 
