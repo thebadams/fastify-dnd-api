@@ -1,18 +1,5 @@
 import readJSON, { FILE_NAMES } from '../utils/readJSON';
-
-type SpellDTO = {
-  Name: string;
-  Source: string;
-  Level: string;
-  'Casting Time': string;
-  Duration: string;
-  School: string;
-  Range: string;
-  Components: string;
-  Classes: string;
-  Text: string;
-  'At Higher Levels': string;
-};
+import { SpellDTO } from './spells.schema';
 
 export const findAllSpells = async () => {
   const file = await readJSON(FILE_NAMES.SPELLS);

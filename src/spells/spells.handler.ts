@@ -1,21 +1,36 @@
-import { FastifyReply, FastifyRequest, RouteHandlerMethod } from 'fastify';
+import {
+  FastifyInstance,
+  FastifyReply,
+  FastifyRequest,
+  RouteHandlerMethod,
+  RouteShorthandMethod,
+} from 'fastify';
 import { findAllSpells, findSpellByName } from './spells.service';
-interface SpellsParams {
+export interface SpellsParams {
   name: string;
 }
 export const findAllSpellsHandler: RouteHandlerMethod = async (
-  request,
-  reply
+  request: FastifyRequest,
+  reply: FastifyReply
 ) => {
   const allSpells = await findAllSpells();
   return allSpells;
 };
 
-export const findSpellByNameHandler = async (
-  request: FastifyRequest<{ Params: SpellsParams }>,
-  reply: FastifyReply
-) => {
+export async function findSpellByNameHandler<
+  T extends FastifyRequest<{ Params: SpellsParams }>
+>(this: FastifyInstance, request: T, reply: FastifyReply) {
   const { name } = request.params;
+
   const spell = await findSpellByName(name);
-  return spell;
-};
+  if (spell === 'No Spell With That Name Found') {
+    reply.statusCode = 404;
+    return {
+      message: spell,
+    };
+  } else {
+    return spell;
+  }
+
+  // reply.code(204);
+}

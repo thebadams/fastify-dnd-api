@@ -5,4 +5,4 @@ GET http://localhost:3001/api/spells/
 
 ###
 
-GET http://localhost:3001/api/spells/Fireball
+GET http://localhost:3001/api/spells/Mage Hand HTTP/1.1
