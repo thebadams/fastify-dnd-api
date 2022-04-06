@@ -1,5 +1,7 @@
 import fastify from 'fastify';
 import fastifyEnv, { fastifyEnvOpt } from 'fastify-env';
+import fastifyStatic from 'fastify-static';
+import path, { join } from 'path';
 import { registerSpellRoutes } from '../spells/spells.route';
 
 declare module 'fastify' {
@@ -36,9 +38,14 @@ const registerServer = async () => {
 
     console.log(server.config);
   });
+  const path = join(__dirname, '../../public');
+  server.log.info(path);
+  server.register(fastifyStatic, {
+    root: path,
+  });
 
-  server.get('/hello', async (request, reply) => {
-    return { message: 'Hello World' };
+  server.get('/', async (request, reply) => {
+    reply.sendFile('index.html');
   });
 
   server.register(registerSpellRoutes, { prefix: '/api' });
