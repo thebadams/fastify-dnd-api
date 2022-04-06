@@ -2,7 +2,7 @@ import fastify from 'fastify';
 import fastifyEnv, { fastifyEnvOpt } from 'fastify-env';
 import fastifyStatic from 'fastify-static';
 import path, { join } from 'path';
-import { registerSpellRoutes } from '../spells/spells.route';
+import { registerAPIRoutes } from '../api/api.route';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -48,7 +48,7 @@ const registerServer = async () => {
     reply.sendFile('index.html');
   });
 
-  server.register(registerSpellRoutes, { prefix: '/api' });
+  server.register(registerAPIRoutes, { prefix: '/api' });
   await server.after();
   return server;
 };
