@@ -16,3 +16,8 @@ model User {
 	email String @unique
 	password String @unique
 }
+
+model Character {
+	id Int @id@default(autoincrement())
+	name String
+}
