@@ -3,35 +3,36 @@ import fastifyEnv, { fastifyEnvOpt } from 'fastify-env';
 import fastifyStatic from 'fastify-static';
 import path, { join } from 'path';
 import { registerAPIRoutes } from '../api/api.route';
+import { envOptions } from './env';
 
-declare module 'fastify' {
-  interface FastifyInstance {
-    config: {
-      PORT: string;
-    };
-  }
-}
+// declare module 'fastify' {
+//   interface FastifyInstance {
+//     config: {
+//       PORT: string;
+//     };
+//   }
+// }
 
-const schema = {
-  type: 'object',
-  required: ['PORT'],
-  properties: {
-    PORT: {
-      type: 'string',
-      default: 3001,
-    },
-  },
-};
+// const schema = {
+//   type: 'object',
+//   required: ['PORT'],
+//   properties: {
+//     PORT: {
+//       type: 'string',
+//       default: 3001,
+//     },
+//   },
+// };
 
-const options: fastifyEnvOpt = {
-  confKey: 'config',
-  schema,
-  data: process.env,
-  dotenv: true,
-};
+// const options: fastifyEnvOpt = {
+//   confKey: 'config',
+//   schema,
+//   data: process.env,
+//   dotenv: true,
+// };
 const registerServer = async () => {
   const server = fastify({ logger: true });
-  server.register(fastifyEnv, options).ready((error) => {
+  server.register(fastifyEnv, envOptions).ready((error) => {
     if (error) {
       console.error(error);
     }
